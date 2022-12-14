@@ -6330,3 +6330,4 @@ node_modules/yauzl/README.md
 /cypress/videos
 /cypress/screenshots
 /cypress/downloads
+cypress.env.json
