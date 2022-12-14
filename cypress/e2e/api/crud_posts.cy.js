@@ -1,24 +1,17 @@
+import { testeContratoPOSTPosts } from '../../fixtures/schema-POST-posts'
+import { testeContratiGETPosts } from '../../fixtures/schema-GET-posts'
+
 describe('CRUD - Posts', () => {
 
-    let postId =''
+    let postId = ''
     let mensagem = 'Este post foi feito pelo Cypress'
    
-    //11.1.0
+    // 11.1.0
 
-    before(() => { //pode usar beforEach para fazer login a cada teste
-
-        cy.request({
-            method: 'POST',
-            url: '/api/auth',
-            body: {
-                email: Cypress.env('email'),
-                password: Cypress.env('password').toString()
-            }
-         }).then(() => {
-            Cypress.Cookies.defaults({ //não está mais sendo usado na versao 12
-                preserve: 'jwt'
-            })
-        })
+    before(() => { // pode usar beforEach para fazer login a cada teste
+       
+        cy.login(Cypress.env('email'),Cypress.env('password'))
+ 
     })
 
     it('cria um post', () => {
@@ -32,20 +25,24 @@ describe('CRUD - Posts', () => {
 
         }).then(({ status, body }) => {
             expect(status).to.eq(201)
-            expect(body.text).to.eq(mensagem) //pode ser feita outras validações basta ver a informação no cypress e fazer os expects aqui
+            expect(body.text).to.eq(mensagem) // pode ser feita outras validações basta ver a informação no cypress e fazer os expects aqui
             postId = body._id
+
+            cy.testeContrato(testeContratoPOSTPosts,body)
         })
     })
 
-    it('lê o post', () => { //toda vez que um teste é feito ao fim dele o cypress limpa todas as informações dele (navegador)
+    it('lê o post', () => { // toda vez que um teste é feito ao fim dele o cypress limpa todas as informações dele (navegador)
         
         cy.request({
             method: 'GET',
             url: `/api/posts/${postId}`
-        }).then(({ status, body})=>{
+        }).then(({ status, body}) => {
             expect(status).to.eq(200)
             expect(body.text).to.eq(mensagem)
             expect(body.likes).to.have.lengthOf(0)
+
+            cy.testeContrato(testeContratiGETPosts,body)
         })
     })
 
