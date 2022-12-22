@@ -11,7 +11,7 @@ describe('Testes do cypress.config.js', () => {
 
     // erro porque o browser não consegue executar FS
     it.skip('conta o total de arquivos da pasta UI', () => {
-        cy.log(fs.readdirSync(cypress/e2e/api).length)
+        cy.log(fs.readdirSync('cypress/e2e/api').length)
     })
 
     it('valida a conexão com o mongo', () => {
