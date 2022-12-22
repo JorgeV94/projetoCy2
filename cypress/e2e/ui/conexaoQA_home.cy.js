@@ -6,13 +6,13 @@ describe('pagina inicial', () => {
         cy.visit('/')
     })
     
-    it('valida o título da pagina inicial', () => {
+    it('valida o título da pagina inicial',{ tags: '@smoke' }, () => {
         cy.contains('Conectando')
             .should('have.text','Conectando QAs ...')
             .and('have.class','x-large')
     })
 
-    it('seleciona um elemneto passando o seletor', () => {
+    it('seleciona um elemneto passando o seletor', { tags: '@flaky'}, () => {
         cy.contains('h1','QAs')
             .should('have.text','Conectando QAs ...')
     })

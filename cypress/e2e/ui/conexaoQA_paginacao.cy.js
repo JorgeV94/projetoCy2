@@ -1,6 +1,6 @@
 describe('paginação da página de QAs', () => {
 
-    it('valida paginação com 7 perfis', () => {
+    it('valida paginação com 7 perfis', { tags: '@smoke' }, () => {
         
         cy.intercept('GET','/api/profile', { fixture: 'paginacao_7_usuarios' }) // teste moca de API sempre será intercept
             .as('perfis')
